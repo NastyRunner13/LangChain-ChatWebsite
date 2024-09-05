@@ -11,3 +11,4 @@ faiss-cpu
 streamlit
 langchain_groq
 langchain_chroma
+bs4
