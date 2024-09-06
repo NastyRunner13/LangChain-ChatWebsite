@@ -86,7 +86,7 @@ website_url = st.text_input("Website URL")
 
 if website_url:
 
-    if "chat_history" not in st.session_state:
+    if "chat_history" not in st.session_state or st.button("Clear Chat History"):
         st.session_state.chat_history = [
             AIMessage(content="Hello, I am a bot. How can I help you?")
         ]
@@ -95,13 +95,11 @@ if website_url:
         st.session_state.vectorstore = get_vectorstore_from_url(website_url)
 
     user_query = st.chat_input("Type your message here...")
+
     if user_query is not None and user_query != "":
         response = get_response(user_query)
         st.session_state.chat_history.append(HumanMessage(content=user_query))
         st.session_state.chat_history.append(AIMessage(content=response))
-
-    if st.button("Clear Chat History"):
-        st.session_state.chat_history = []
 
     for message in st.session_state.chat_history:
         if isinstance(message, AIMessage):
